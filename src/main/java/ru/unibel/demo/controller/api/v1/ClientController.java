@@ -17,7 +17,6 @@ public class ClientController {
 
     @PostMapping(value = "/addNewClient")
     public void addNewClient(@RequestBody AddClientDTO addClientDTO) {
-        System.out.println("Client DTO = " + addClientDTO);
         clientService.addNewClient(addClientDTO);
     }
 

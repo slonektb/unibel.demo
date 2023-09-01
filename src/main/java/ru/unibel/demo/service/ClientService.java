@@ -9,7 +9,6 @@ import ru.unibel.demo.dto.ClientIdDTO;
 import ru.unibel.demo.entity.Client;
 import ru.unibel.demo.exeptions.CustomException;
 import ru.unibel.demo.repository.ClientRepository;
-import ru.unibel.demo.repository.ContactRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClientService {
     private final ClientRepository clientRepository;
-    private final ContactRepository contactRepository;
     private final Mapper mapper;
 
     public void addNewClient(AddClientDTO addClientDTO) {
@@ -37,11 +35,8 @@ public class ClientService {
 
     public ClientDTO getOneClient(ClientIdDTO clientIdDTO) {
         Optional<Client> client = clientRepository.findById(clientIdDTO.getId());
-        ClientDTO clientDTO = new ClientDTO();
         if (client.isPresent()) {
-            clientDTO = mapper.convet(client.get(), ClientDTO.class);
-//            clientDTO.setContacts(contactRepository.findByClient(client.get()).stream().collect(Collectors.toSet()));
-            return clientDTO;
+            return mapper.convet(client.get(), ClientDTO.class);
         } else {
             throw new CustomException("Клиента с таким идентификатором не обнаружено!");
         }
